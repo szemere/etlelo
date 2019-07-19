@@ -48,6 +48,10 @@ def pdf_frissitese():
       return
   pdf_letoltese()
 
+def fejlec_betoltese():
+  import PyPDF2
+  fejlec = open("static/fejlec.pdf", "rb")
+  return PyPDF2.PdfFileReader(fejlec).getPage(0)
 
 def nap_kivagasa(regio):
   import PyPDF2
@@ -64,12 +68,14 @@ def nap_kivagasa(regio):
   pageObj.cropBox.upperLeft  = (regio[0], regio[1])
   pageObj.cropBox.lowerRight = (regio[2], regio[3])
 
+  fejlec = fejlec_betoltese()
+
+  pdf_out.addPage(fejlec)
   pdf_out.addPage(pageObj)
   pdf_out.write(file_out)
 
   file_in.close()
   file_out.close()
-
 
 def mai_nap_kivagasa():
   import datetime
